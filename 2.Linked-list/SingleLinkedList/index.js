@@ -95,6 +95,80 @@ function printList(){
     }
 }
 
+// To delete a node from the linked list, we need to do the following steps:
+
+// Find the previous node of the node to be deleted.
+// Change the next of the previous node.
+// Free memory for the node to be deleted.
+function deleteNode(node){
+    if(node == null){
+        return
+    }
+    if(node.next == null){
+        node = null
+        return
+    }
+    node.data = node.next.data
+    node.next = node.next.next
+    return
+}
+
+// Search an element in a Linked List
+function search(data,list){
+    var current = list
+    while(current != null){
+        if(current.data == data){
+            return true
+        }
+        current = current.next
+    }
+    return false
+
+}
+
+// Find Length of a Linked List
+function length(list){
+    var current = list
+    var count = 0
+    while(current != null){
+        count++
+        current = current.next
+    }
+    return count
+}
+
+// Reverse a Linked List
+function reverse(list){
+    var current = list
+    var prev = null
+    var next = null
+    while(current != null){
+        next = current.next
+        current.next = prev
+        prev = current
+        current = next
+    }
+    list = prev
+    return list
+}
+
+// Delete a Linked List node at a given position
+function deleteNodeAtPosition(position, list){
+    var current = list
+    var prev = null
+    var count = 0
+    while(current != null){
+        if(count == position){
+            prev.next = current.next
+            return
+        }
+        prev = current
+        current = current.next
+        count++
+    }
+
+}
+
 // Demo for insert after
 var node1 = new Node(1);
 var node2 = new Node(2);
@@ -109,5 +183,9 @@ push(0)
 insertAfter(node2, 4)
 deleteAtBeginning()
 deleteAtEnd()
+deleteNode(node1)
+console.log('search',search(10, head))
+console.log('length',length(head))
+head=reverse(head)
 
 printList()
