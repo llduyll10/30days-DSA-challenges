@@ -153,12 +153,16 @@ function reverse(list){
 }
 
 // Delete a Linked List node at a given position
-function deleteNodeAtPosition(position, list){
+function deleteNodeAtIndex(index, list){
     var current = list
     var prev = null
     var count = 0
+    if (index === 0) {
+        list = list.next;
+        return
+    }
     while(current != null){
-        if(count == position){
+        if(count == index){
             prev.next = current.next
             return
         }
