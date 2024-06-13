@@ -15,7 +15,6 @@ function selectionSort(arr){
             }
         }
         swap(arr, i, minIdx)
-
     }
 }
 
