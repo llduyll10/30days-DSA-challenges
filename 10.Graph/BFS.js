@@ -13,7 +13,7 @@ class Graph {
     // Hàm để thực hiện duyệt BFS trên đồ thị
     bfs(startNode) {
         const queue = [startNode]; // Tạo hàng đợi và thêm đỉnh bắt đầu vào hàng đợi
-        const visited = {}; // Khởi tạo đối tượng để lưu các đỉnh đã thăm
+        const visited = new Array(Object.keys(this.neighbors).length).fill(false); // Khởi tạo mảng để lưu các đỉnh đã thăm
 
         visited[startNode] = true; // Đánh dấu đỉnh bắt đầu đã được thăm
 
@@ -41,7 +41,6 @@ graph.addEdge(0, 2); // Thêm cạnh giữa 0 và 2
 graph.addEdge(1, 3); // Thêm cạnh giữa 1 và 3
 graph.addEdge(1, 4); // Thêm cạnh giữa 1 và 4
 graph.addEdge(2, 4); // Thêm cạnh giữa 2 và 4
-
 
 console.log('neighbors', graph.neighbors);
 
