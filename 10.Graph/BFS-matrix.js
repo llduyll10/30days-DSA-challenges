@@ -47,7 +47,47 @@ function bfs(neighbors, startNode) {
   return result;
 }
 
-// Thực hiện duyệt BFS bắt đầu từ đỉnh 0
-console.log('Breadth First Traversal starting from vertex 0:');
-const bfsResult = bfs(neighbors, 0);
-console.log(`BFS result: ${bfsResult.join(' -> ')}`);
+function minPath(start, end) {
+  let queue = [start];
+  let visited = {};
+  visited[start] = true;
+
+  let path = {};
+  path[start] = null;
+
+  while (queue.length > 0) {
+    let currentNode = queue.shift();
+
+    visited[currentNode] = true;
+
+    let neighbors = getNeighbors(matrix);
+
+    if (currentNode === end) {
+      let tmp = end;
+      let pathResult = [];
+      // path { '0': null, '1': 0, '2': 1, '3': 0, '4': 3, '5': 1 }
+      // step 1: tmp = end = 5
+      // step 2: tmp = 5 => path[5] = 1
+      // step 3: tmp= 1=> path[1] = null > stop
+      while (tmp !== null) {
+        pathResult.push(tmp);
+        tmp = path[tmp];
+      }
+      return pathResult.reverse();
+    }
+
+    for (let neighbor of neighbors[currentNode] || []) {
+      if (!visited[neighbor]) {
+        queue.push(neighbor);
+        visited[neighbor] = true;
+        path[neighbor] = currentNode;
+      }
+    }
+  }
+
+  return null;
+}
+
+// Driver code
+let res = minPath(0, 5);
+console.log(res);
