@@ -34,10 +34,9 @@ class MinHeap {
 
     // Nếu nút nhỏ nhất không phải là nút hiện tại, hoán đổi và tiếp tục heapify
     if (smallest !== index) {
-      [this.heap[index], this.heap[smallest]] = [
-        this.heap[smallest],
-        this.heap[index],
-      ]; // Hoán đổi vị trí
+      let temp = this.heap[index];
+      this.heap[index] = this.heap[smallest];
+      this.heap[smallest] = temp;
       this.heapifyDown(smallest); // Đệ quy gọi heapifyDown tại nút nhỏ nhất
     }
   }
