@@ -83,11 +83,10 @@ class Graph {
     this.adjacencyList[u].push({ node: v, weight: weight });
   }
 
-  dijkstra(start, end) {
+  findMinPath(start, end) {
     const distances = {};
     const previous = {};
     const pq = new PriorityQueue();
-    console.log('adjacencyList', this.adjacencyList);
     // Khởi tạo distances, previous và đưa các đỉnh vào hàng đợi ưu tiên.
     for (let vertex in this.adjacencyList) {
       if (vertex == start) {
@@ -132,6 +131,41 @@ class Graph {
 
     return []; // Trả về mảng rỗng nếu không có đường đi từ đỉnh bắt đầu đến đỉnh kết thúc
   }
+
+  dijkstra(start) {
+    const distances = {};
+    const previous = {};
+    const pq = new PriorityQueue();
+
+    for (let vertex in this.adjacencyList) {
+      if (vertex == start) {
+        distances[vertex] = 0;
+        pq.enqueue(vertex, 0);
+      } else {
+        distances[vertex] = Infinity;
+        pq.enqueue(vertex, Infinity);
+      }
+      previous[vertex] = null;
+    }
+
+    while (!pq.isEmpty()) {
+      let { element: smallest } = pq.dequeue();
+
+      if (smallest || distances[smallest] !== Infinity) {
+        for (let neighbor of this.adjacencyList[smallest]) {
+          let candidate = distances[smallest] + neighbor.weight;
+          let nextNeighbor = neighbor.node;
+          if (candidate < distances[nextNeighbor]) {
+            distances[nextNeighbor] = candidate;
+            previous[nextNeighbor] = smallest;
+            pq.enqueue(nextNeighbor, candidate);
+          }
+        }
+      }
+    }
+
+    return distances;
+  }
 }
 
 // Tạo đồ thị và thêm các cạnh
@@ -148,5 +182,8 @@ graph.addEdge(4, 3, 3);
 graph.addEdge(5, 4, 1);
 
 // Chạy thuật toán Dijkstra từ đỉnh 0 đến đỉnh 4
-const path = graph.dijkstra(0, 4);
+const path = graph.findMinPath(0, 4);
 console.log(path); // Kết quả mong đợi: [0, 1, 3, 2, 5, 4]
+
+const distances = graph.dijkstra(0);
+console.log(distances)
