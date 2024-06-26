@@ -165,7 +165,18 @@ class Graph {
       }
     }
 
-    return distances;
+    return {distances, previous}
+  }
+
+  printPath(start, end, previous){
+    const path = [];
+    let current = end;
+    while (current !== null) {
+      path.push(current);
+      current = previous[current];
+    }
+
+    return path.reverse();
   }
 }
 
@@ -183,8 +194,13 @@ graph.addEdge(4, 3, 3);
 graph.addEdge(5, 4, 1);
 
 // Chạy thuật toán Dijkstra từ đỉnh 0 đến đỉnh 4
-const path = graph.findMinPath(0, 4);
-console.log(path); // Kết quả mong đợi: [0, 1, 3, 2, 5, 4]
+// const path = graph.findMinPath(0, 4);
+// console.log(path); // Kết quả mong đợi: [0, 1, 3, 2, 5, 4]
 
-const distances = graph.dijkstra(0);
-console.log(distances)
+const result = graph.dijkstra(0);
+console.log(result.distances)
+console.log(result.previous)
+path = graph.printPath( 0, 4, result.previous);
+console.log('path', path);
+
+
