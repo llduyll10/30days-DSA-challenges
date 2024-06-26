@@ -127,6 +127,7 @@ class Graph {
           }
         }
       }
+
     }
 
     return []; // Trả về mảng rỗng nếu không có đường đi từ đỉnh bắt đầu đến đỉnh kết thúc
@@ -149,16 +150,16 @@ class Graph {
     }
 
     while (!pq.isEmpty()) {
-      let { element: smallest } = pq.dequeue();
+      let smallest = pq.dequeue().element;
 
       if (smallest || distances[smallest] !== Infinity) {
         for (let neighbor of this.adjacencyList[smallest]) {
-          let candidate = distances[smallest] + neighbor.weight;
+          let candidate = distances[smallest] + neighbor.weight; // Tính khoảng cách mới từ đỉnh hiện tại đến đỉnh kề.
           let nextNeighbor = neighbor.node;
-          if (candidate < distances[nextNeighbor]) {
-            distances[nextNeighbor] = candidate;
+          if (candidate < distances[nextNeighbor]) { // So sánh khoảng cách mới với khoảng cách hiện tại đến đỉnh kề.
+            distances[nextNeighbor] = candidate; // Nếu khoảng cách mới nhỏ hơn, cập nhật khoảng cách và đỉnh trước đó.
             previous[nextNeighbor] = smallest;
-            pq.enqueue(nextNeighbor, candidate);
+            pq.enqueue(nextNeighbor, candidate); // Thêm đỉnh kề vào hàng đợi ưu tiên với khoảng cách mới.
           }
         }
       }
